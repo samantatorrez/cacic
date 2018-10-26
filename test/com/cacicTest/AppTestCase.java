@@ -210,7 +210,7 @@ public class AppTestCase extends TestCase {
 		autor.setRol("autor");
 		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
 		Usuario revisor = new Usuario();
-		revisor.setRol("autor");
+		revisor.setRol("revisor");
 		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
 		
 		Trabajo trabajo;
@@ -241,6 +241,35 @@ public class AppTestCase extends TestCase {
 		}
 		List<Trabajo> trabajos = revisionDao.getTrabajosByAutor(autor.getIdUsuario());
 		assertEquals(0, trabajos.size());
+	}
+	/*
+	 * Punto f
+	 */
+	public void testTrabajosByAutorRevisorArea() {
+		List<Integer> idsTrabajos= new ArrayList<Integer>();
+		Usuario autor = new Usuario();
+		autor.setRol("autor");
+		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
+		Usuario revisor = new Usuario();
+		revisor.setRol("revisor");
+		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
+		
+		Trabajo trabajo;
+		Revision revision;
+		Integer id;
+		for(int i =0;i<3; i++) {
+			trabajo=new Trabajo(autor);
+			trabajo.setPalabrasClaves("ciencia,fisica,quimica");
+			id = trabajoDao.altaTrabajo(trabajo);
+			idsTrabajos.add(id);
+			trabajo.setIdTrabajo(id);
+			revisionDao.altaRevision(new Revision(revisor,trabajo));
+		}
+		List<Trabajo> trabajos = revisionDao.getTrabajosByAutorRevisorArea(autor.getIdUsuario(), revisor.getIdUsuario(), "fisica");
+		assertEquals(idsTrabajos.size(), trabajos.size());
+		for(int i =0;i<3; i++) {
+			assertEquals(idsTrabajos.get(i),trabajos.get(i).getIdTrabajo());
+		}	
 	}
 	/*
 	 * Punto g
