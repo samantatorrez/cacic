@@ -1,5 +1,6 @@
 package com.cacic.db.Impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -127,5 +128,28 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 		}finally{
 			eManager.close();
 		}
+	}
+	@Override
+	public List<Revision> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta) {
+		List<Revision> revisiones = null;
+		EntityManager eManager = null;
+		try {
+			eManager = getEntityManager();
+			eManager.getTransaction().begin();
+			TypedQuery<Revision> query = eManager.createQuery(
+			         "Select a From "+getName()+" a Where a.evaluador.idUsuario=:id "
+			         		+ "And a.fechaCreacion<=:hasta And a.fechaCreacion>=:desde", Revision.class);
+			query.setParameter("id", id);
+			query.setParameter("desde", desde);
+			query.setParameter("hasta", hasta);
+			revisiones = query.getResultList();
+			eManager.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+		}finally{
+			eManager.close();
+		}
+		return revisiones;
 	}
 }

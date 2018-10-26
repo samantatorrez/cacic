@@ -1,5 +1,6 @@
 package com.cacic.db;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.cacic.entity.Revision;
@@ -12,4 +13,5 @@ public interface RevisionDao {
 	public void bajaRevision(Integer id);
 	public void eliminarDatos();
 	List<Trabajo> getTrabajosByEvaluador(Integer id);
+	List<Revision> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta);
 }

@@ -2,6 +2,7 @@ package com.cacicTest;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.After;
@@ -148,7 +149,58 @@ public class AppTestCase extends TestCase {
 		assertEquals(trabajo,trabajos.get(0));
 		
 	}
-
+	/*
+	 * Punto d iii
+	 */
+	@Test
+	public void testObtenerRevisionesDadoRevisorYRangoFechas() {
+		Usuario revisor = new Usuario();
+		revisor.setRol("revisor");
+		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
+		Usuario autor = new Usuario();
+		usuarioDao.altaUsuario(autor);
+		autor.setRol("autor");
+		Trabajo trabajo = new Trabajo(autor);
+		trabajoDao.altaTrabajo(trabajo);
+		
+		Date fechaEnElRango=new Date(System.currentTimeMillis());
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(fechaEnElRango); 
+		c.add(Calendar.DATE, -3);
+		Date desde=new Date(c.getTimeInMillis());
+		
+		c.setTime(fechaEnElRango); 
+		c.add(Calendar.DATE, 3);
+		Date hasta=new Date(c.getTimeInMillis());
+		
+		c.setTime(fechaEnElRango); 
+		c.add(Calendar.DATE, -5);
+		Date fechaAbajoDelRango=new Date(c.getTimeInMillis());
+		c.setTime(fechaEnElRango); 
+		c.add(Calendar.DATE, 5);
+		Date fechaArribaDelRango=new Date(c.getTimeInMillis());
+		
+		List<Integer> idsRevisionesEnElRango= new ArrayList<Integer>();
+		Revision review;
+		for(int i = 0; i<3;i++) {
+			review=new Revision(revisor,trabajo);
+			review.setFechaCreacion(fechaEnElRango);
+			idsRevisionesEnElRango.add(revisionDao.altaRevision(review));
+		}
+		review = new Revision(revisor,trabajo);
+		review.setFechaCreacion(fechaAbajoDelRango);
+		revisionDao.altaRevision(review);
+		review = new Revision(revisor,trabajo);
+		review.setFechaCreacion(fechaArribaDelRango);
+		revisionDao.altaRevision(review);
+		
+		List<Revision> revisiones = revisionDao.getTrabajosByEvaluadorAndDateRange(revisor.getIdUsuario(),desde,hasta);
+		assertEquals(idsRevisionesEnElRango.size(),revisiones.size());
+		for(int i = 0; i<3;i++) {
+			assertEquals(idsRevisionesEnElRango.get(i), revisiones.get(i).getIdRevision());
+		}
+	}
+	
 	/*
 	 * Punto g
 	 */
