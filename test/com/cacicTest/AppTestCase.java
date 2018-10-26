@@ -243,6 +243,39 @@ public class AppTestCase extends TestCase {
 		assertEquals(0, trabajos.size());
 	}
 	/*
+	 * Punto e
+	 */
+	@Test
+	public void testConsultarTrabajos(){
+		//Crea un usuario
+		Usuario usuario = new Usuario();
+		usuario.setNombre("tester");
+		usuario.setApellido("testerson");
+		usuario.setCodPostal(7600);
+		usuario.setContrasenia("1234");
+		usuario.setDomicilio("testDomicilio");
+		usuario.setFechaNac(new Date(System.currentTimeMillis()));
+		usuario.setLugarTrabajo("UNICEN");
+		usuario.setNombreUsuario("testUser");
+		usuario.setRol("autor");
+		usuario.setTemas("matematicas,algebra");
+		//Obtiene el id despues de darlo de alta
+		Integer idU = usuarioDao.altaUsuario(usuario);
+		usuario.setIdUsuario(idU);
+		//Crea un trabajo
+		Trabajo trabajo = new Trabajo();
+		trabajo.setAutor(usuario);
+		trabajo.setCategoria("articulo");
+		trabajo.setPalabrasClaves("matematicas,algebra");
+		trabajo.setRevisiones(null);
+		usuario.addTrabajos(trabajo);
+		//Obtiene el id despues de darlo de alta
+		Integer idT = trabajoDao.altaTrabajo(trabajo);
+		trabajo.setIdTrabajo(idT);
+		//Obtine el trabajo que esta en la base y lo compara con el creado 
+		assertEquals(trabajo, trabajoDao.getTrabajo(idT));
+	}
+	/*
 	 * Punto f
 	 */
 	public void testTrabajosByAutorRevisorArea() {
