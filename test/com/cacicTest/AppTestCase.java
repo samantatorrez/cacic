@@ -200,7 +200,48 @@ public class AppTestCase extends TestCase {
 			assertEquals(idsRevisionesEnElRango.get(i), revisiones.get(i).getIdRevision());
 		}
 	}
-	
+	/*
+	 * Punto d iv
+	 */
+	@Test
+	public void testObtenerTrabajosEnviadosARevisionByAutor() {
+		List<Integer> idsTrabajos= new ArrayList<Integer>();
+		Usuario autor = new Usuario();
+		autor.setRol("autor");
+		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
+		Usuario revisor = new Usuario();
+		revisor.setRol("autor");
+		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
+		
+		Trabajo trabajo;
+		Revision revision;
+		Integer id;
+		for(int i =0;i<3; i++) {
+			trabajo=new Trabajo(autor);
+			id = trabajoDao.altaTrabajo(trabajo);
+			idsTrabajos.add(id);
+			trabajo.setIdTrabajo(id);
+			revisionDao.altaRevision(new Revision(revisor,trabajo));
+		}
+		List<Trabajo> trabajos = revisionDao.getTrabajosByAutor(autor.getIdUsuario());
+		assertEquals(idsTrabajos.size(), trabajos.size());
+		for(int i =0;i<3; i++) {
+			assertEquals(idsTrabajos.get(i),trabajos.get(i).getIdTrabajo());
+		}	
+	}
+	@Test
+	public void testObtenerTrabajosEnviadosARevisionByAutorCasoSinEnviar() {
+		List<Integer> idsTrabajos= new ArrayList<Integer>();
+		Usuario autor = new Usuario();
+		autor.setRol("autor");
+		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
+		Trabajo trabajo;
+		for(int i =0;i<3; i++) {
+			idsTrabajos.add(trabajoDao.altaTrabajo(new Trabajo(autor)));
+		}
+		List<Trabajo> trabajos = revisionDao.getTrabajosByAutor(autor.getIdUsuario());
+		assertEquals(0, trabajos.size());
+	}
 	/*
 	 * Punto g
 	 */

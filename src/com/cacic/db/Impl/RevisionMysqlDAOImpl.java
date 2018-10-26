@@ -152,4 +152,24 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 		}
 		return revisiones;
 	}
+	@Override
+	public List<Trabajo> getTrabajosByAutor(Integer id) {
+		List<Trabajo> trabajos = null;
+		EntityManager eManager = null;
+		try {
+			eManager = getEntityManager();
+			eManager.getTransaction().begin();
+			TypedQuery<Trabajo> query = eManager.createQuery(
+			         "Select a.trabajo From "+getName()+" a Where a.trabajo.autor.idUsuario=:id", Trabajo.class);
+			query.setParameter("id", id);
+			trabajos = query.getResultList();
+			eManager.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+		}finally{
+			eManager.close();
+		}
+		return trabajos;
+	}
 }

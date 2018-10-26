@@ -14,4 +14,5 @@ public interface RevisionDao {
 	public void eliminarDatos();
 	List<Trabajo> getTrabajosByEvaluador(Integer id);
 	List<Revision> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta);
+	List<Trabajo> getTrabajosByAutor(Integer id);
 }
