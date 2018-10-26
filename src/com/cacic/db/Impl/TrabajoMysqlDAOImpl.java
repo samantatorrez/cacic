@@ -47,9 +47,10 @@ public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
 		EntityManager eManager= null;
 		try{
 			eManager = getEntityManager();
+			eManager.getTransaction().begin();
 			trabajos  = eManager.createQuery(
 			         "Select a From "+getName()+" a", Trabajo.class).getResultList();
-			return trabajos;
+			eManager.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCause());
@@ -110,7 +111,6 @@ public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
 			query.setParameter("categoria", categoria );
 			trabajos = query.getResultList();
 			eManager.getTransaction().commit();
-			return trabajos;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCause());

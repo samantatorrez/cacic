@@ -97,4 +97,49 @@ public class Trabajo {
 	public void addRevisiones(Revision revision) {
 		this.revisiones.add(revision);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((autor == null) ? 0 : autor.hashCode());
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((idTrabajo == null) ? 0 : idTrabajo.hashCode());
+		result = prime * result + ((palabrasClaves == null) ? 0 : palabrasClaves.hashCode());
+		result = prime * result + ((revisiones == null) ? 0 : revisiones.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Trabajo other = (Trabajo) obj;
+		if (autor == null) {
+			if (other.autor != null)
+				return false;
+		} else if (!autor.getIdUsuario().equals(other.autor.getIdUsuario()))
+			return false;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
+		if (idTrabajo == null) {
+			if (other.idTrabajo != null)
+				return false;
+		} else if (!idTrabajo.equals(other.idTrabajo))
+			return false;
+		if (palabrasClaves == null) {
+			if (other.palabrasClaves != null)
+				return false;
+		} else if (!palabrasClaves.equals(other.palabrasClaves))
+			return false;
+		return true;
+	}
+	
 }
