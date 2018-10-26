@@ -10,4 +10,5 @@ public interface TrabajoDao {
 	public List<Trabajo> getTrabajos();
 	public void bajaTrabajo(Integer id);
 	public void eliminarDatos();
+	public List<Trabajo> getTrabajosCategoria(String string);
 }

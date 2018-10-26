@@ -170,5 +170,99 @@ public class Usuario {
 	public void addTrabajos(Trabajo trabajo) {
 		this.trabajos.add(trabajo);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
+		result = prime * result + codPostal;
+		result = prime * result + ((contrasenia == null) ? 0 : contrasenia.hashCode());
+		result = prime * result + ((domicilio == null) ? 0 : domicilio.hashCode());
+		result = prime * result + ((fechaNac == null) ? 0 : fechaNac.hashCode());
+		result = prime * result + ((idUsuario == null) ? 0 : idUsuario.hashCode());
+		result = prime * result + ((lugarTrabajo == null) ? 0 : lugarTrabajo.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((nombreUsuario == null) ? 0 : nombreUsuario.hashCode());
+		result = prime * result + ((revisiones == null) ? 0 : revisiones.hashCode());
+		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
+		result = prime * result + ((temas == null) ? 0 : temas.hashCode());
+		result = prime * result + ((trabajos == null) ? 0 : trabajos.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (apellido == null) {
+			if (other.apellido != null)
+				return false;
+		} else if (!apellido.equals(other.apellido))
+			return false;
+		if (codPostal != other.codPostal)
+			return false;
+		if (contrasenia == null) {
+			if (other.contrasenia != null)
+				return false;
+		} else if (!contrasenia.equals(other.contrasenia))
+			return false;
+		if (domicilio == null) {
+			if (other.domicilio != null)
+				return false;
+		} else if (!domicilio.equals(other.domicilio))
+			return false;
+		if (fechaNac == null) {
+			if (other.fechaNac != null)
+				return false;
+		} else if (!fechaNac.toString().equals(other.fechaNac.toString()))
+			return false;
+		if (idUsuario == null) {
+			if (other.idUsuario != null)
+				return false;
+		} else if (!idUsuario.equals(other.idUsuario))
+			return false;
+		if (lugarTrabajo == null) {
+			if (other.lugarTrabajo != null)
+				return false;
+		} else if (!lugarTrabajo.equals(other.lugarTrabajo))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (nombreUsuario == null) {
+			if (other.nombreUsuario != null)
+				return false;
+		} else if (!nombreUsuario.equals(other.nombreUsuario))
+			return false;
+		if (revisiones == null) {
+			if (other.revisiones != null)
+				return false;
+		} else if (!revisiones.equals(other.revisiones) && !revisiones.isEmpty())
+			return false;
+		if (rol == null) {
+			if (other.rol != null)
+				return false;
+		} else if (!rol.equals(other.rol))
+			return false;
+		if (temas == null) {
+			if (other.temas != null)
+				return false;
+		} else if (!temas.equals(other.temas))
+			return false;
+		if (trabajos == null) {
+			if (other.trabajos != null)
+				return false;
+		} else if (!trabajos.equals(other.trabajos) && !trabajos.isEmpty())
+			return false;
+		return true;
+	}
 	
 }

@@ -3,6 +3,7 @@ package com.cacic.db.Impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.cacic.db.MysqlDao;
 import com.cacic.db.TrabajoDao;
@@ -96,5 +97,26 @@ public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
 		}finally{
 			eManager.close();
 		}
+	}
+	@Override
+	public List<Trabajo> getTrabajosCategoria(String categoria) {
+		List<Trabajo> trabajos = null;
+		EntityManager eManager= null;
+		try{
+			eManager = getEntityManager();
+			eManager.getTransaction().begin();
+			TypedQuery<Trabajo> query = eManager.createQuery(
+			         "Select a From "+getName()+" a Where categoria=:categoria", Trabajo.class);
+			query.setParameter("categoria", categoria );
+			trabajos = query.getResultList();
+			eManager.getTransaction().commit();
+			return trabajos;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+		}finally{
+			eManager.close();
+		}
+		return trabajos;
 	}
 }

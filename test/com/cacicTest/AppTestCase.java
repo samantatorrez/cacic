@@ -57,7 +57,7 @@ public class AppTestCase extends TestCase {
 		assertEquals(cantidadTrabajos, trabajos.size());
 	}
 
-/*	@Test
+	@Test
 	public void testCrearTrabajosDeInvestigacion() {
 		int cantidadTrabajos = 10;
 		Trabajo trabajo;
@@ -77,7 +77,7 @@ public class AppTestCase extends TestCase {
 
 		List<Trabajo> trabajos = trabajoDao.getTrabajosCategoria("Investigación");
 		assertEquals(cantidadTrabajos, trabajos.size());
-	}*/
+	}
 	
 	@Test
 	public void testConsultaDeTodosLosDatosUsuario() {
@@ -95,7 +95,6 @@ public class AppTestCase extends TestCase {
 		Integer id = usuarioDao.altaUsuario(usuario);
 		usuario.setIdUsuario(id);
 		assertEquals(usuario, usuarioDao.getUsuario(id));
-		
 	}
 
 	@After
