@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,8 +29,9 @@ public class Usuario {
 	private String nombre;
 	@Column(nullable = false)
 	private String apellido;
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private String rol;
+	private Rol rol;
 	@Column(nullable = false)
 	private String lugarTrabajo;
 	@Column(nullable = false)
@@ -53,7 +56,7 @@ public class Usuario {
 		this.idUsuario = null;
 		this.nombre = "";
 		this.apellido = "";
-		this.rol = "";
+		this.rol = Rol.autor;
 		this.lugarTrabajo = "";
 		this.nombreUsuario = "root";
 		setContrasenia("1234");
@@ -65,7 +68,7 @@ public class Usuario {
 		this.trabajos = new ArrayList<Trabajo>();
 	}
 
-	public Usuario( String nombre, String apellido, String rol, String lugarTrabajo, String nombreUsuario,
+	public Usuario( String nombre, String apellido, Rol rol, String lugarTrabajo, String nombreUsuario,
 			String contrasenia, String temas, Date fechaNac, String domicilio, int codPostal, List<Revision> revisiones,
 			List<Trabajo> trabajos) {
 		this.idUsuario = null;
@@ -100,10 +103,10 @@ public class Usuario {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public String getRol() {
+	public Rol getRol() {
 		return rol;
 	}
-	public void setRol(String rol) {
+	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
 	public String getLugarTrabajo() {

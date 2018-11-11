@@ -14,6 +14,7 @@ import com.cacic.db.RevisionDao;
 import com.cacic.db.TrabajoDao;
 import com.cacic.db.UsuarioDao;
 import com.cacic.entity.Revision;
+import com.cacic.entity.Rol;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
@@ -103,7 +104,7 @@ public class AppTestCase extends TestCase {
 		usuario.setFechaNac(new Date(System.currentTimeMillis()));
 		usuario.setLugarTrabajo("globant");
 		usuario.setNombreUsuario("testUser");
-		usuario.setRol("autor");
+		usuario.setRol(Rol.autor);
 		usuario.setTemas("ciencias,programación");
 		//Obtiene el id despues de darlo de alta
 		Integer id = usuarioDao.altaUsuario(usuario);
@@ -118,17 +119,17 @@ public class AppTestCase extends TestCase {
 	public void testDadoRevisorObtenerTrabajosAsignados() {
 		// Revisor del que se espera encontrar un Trabajo asignado
 		Usuario revisor = new Usuario();
-		revisor.setRol("revisor");
+		revisor.setRol(Rol.revisor);
 		Usuario otroRevisor = new Usuario();
-		otroRevisor.setRol("revisor");
+		otroRevisor.setRol(Rol.revisor);
 		
 		Usuario autor = new Usuario();
-		autor.setRol("autor");
+		autor.setRol(Rol.autor);
 		Trabajo trabajo = new Trabajo(autor);
 		
 		//Autor cuyo trabajo no es asignado a el revisor
 		Usuario autorNoAsignado = new Usuario();
-		autorNoAsignado.setRol("autor");
+		autorNoAsignado.setRol(Rol.autor);
 		Trabajo trabajoNoAsignado = new Trabajo(autorNoAsignado);
 		
 		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
@@ -155,11 +156,11 @@ public class AppTestCase extends TestCase {
 	@Test
 	public void testObtenerRevisionesDadoRevisorYRangoFechas() {
 		Usuario revisor = new Usuario();
-		revisor.setRol("revisor");
+		revisor.setRol(Rol.revisor);
 		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
 		Usuario autor = new Usuario();
 		usuarioDao.altaUsuario(autor);
-		autor.setRol("autor");
+		autor.setRol(Rol.autor);
 		Trabajo trabajo = new Trabajo(autor);
 		trabajoDao.altaTrabajo(trabajo);
 		
@@ -207,10 +208,10 @@ public class AppTestCase extends TestCase {
 	public void testObtenerTrabajosEnviadosARevisionByAutor() {
 		List<Integer> idsTrabajos= new ArrayList<Integer>();
 		Usuario autor = new Usuario();
-		autor.setRol("autor");
+		autor.setRol(Rol.autor);
 		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
 		Usuario revisor = new Usuario();
-		revisor.setRol("revisor");
+		revisor.setRol(Rol.revisor);
 		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
 		
 		Trabajo trabajo;
@@ -232,7 +233,7 @@ public class AppTestCase extends TestCase {
 	public void testObtenerTrabajosEnviadosARevisionByAutorCasoSinEnviar() {
 		List<Integer> idsTrabajos= new ArrayList<Integer>();
 		Usuario autor = new Usuario();
-		autor.setRol("autor");
+		autor.setRol(Rol.autor);
 		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
 		for(int i =0;i<3; i++) {
 			idsTrabajos.add(trabajoDao.altaTrabajo(new Trabajo(autor)));
@@ -255,7 +256,7 @@ public class AppTestCase extends TestCase {
 		usuario.setFechaNac(new Date(System.currentTimeMillis()));
 		usuario.setLugarTrabajo("UNICEN");
 		usuario.setNombreUsuario("testUser");
-		usuario.setRol("autor");
+		usuario.setRol(Rol.autor);
 		usuario.setTemas("matematicas,algebra");
 		//Obtiene el id despues de darlo de alta
 		Integer idU = usuarioDao.altaUsuario(usuario);
@@ -279,10 +280,10 @@ public class AppTestCase extends TestCase {
 	public void testTrabajosByAutorRevisorArea() {
 		List<Integer> idsTrabajos= new ArrayList<Integer>();
 		Usuario autor = new Usuario();
-		autor.setRol("autor");
+		autor.setRol(Rol.autor);
 		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
 		Usuario revisor = new Usuario();
-		revisor.setRol("revisor");
+		revisor.setRol(Rol.revisor);
 		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
 		
 		Trabajo trabajo;
