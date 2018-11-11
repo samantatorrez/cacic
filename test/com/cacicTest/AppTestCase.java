@@ -214,7 +214,6 @@ public class AppTestCase extends TestCase {
 		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
 		
 		Trabajo trabajo;
-		Revision revision;
 		Integer id;
 		for(int i =0;i<3; i++) {
 			trabajo=new Trabajo(autor);
@@ -235,7 +234,6 @@ public class AppTestCase extends TestCase {
 		Usuario autor = new Usuario();
 		autor.setRol("autor");
 		autor.setIdUsuario(usuarioDao.altaUsuario(autor));
-		Trabajo trabajo;
 		for(int i =0;i<3; i++) {
 			idsTrabajos.add(trabajoDao.altaTrabajo(new Trabajo(autor)));
 		}
@@ -288,7 +286,6 @@ public class AppTestCase extends TestCase {
 		revisor.setIdUsuario(usuarioDao.altaUsuario(revisor));
 		
 		Trabajo trabajo;
-		Revision revision;
 		Integer id;
 		for(int i =0;i<3; i++) {
 			trabajo=new Trabajo(autor);

@@ -9,6 +9,7 @@ import com.cacic.db.UsuarioDao;
 import com.cacic.entity.Usuario;
 
 public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
+	
 	private String name = "Usuario";
 	
 	public Integer altaUsuario(Usuario usuario) {
@@ -26,6 +27,7 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 		}
 		return usuario.getIdUsuario();
 	}
+	
 	public Usuario getUsuario(Integer id) {
 		Usuario usuario = null;
 		EntityManager eManager=null;
@@ -41,6 +43,7 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 		}
 		return usuario;
 	}
+	
 	public List<Usuario> getUsuarios() {
 		List<Usuario> usuarios = null;
 		EntityManager eManager= null;
@@ -57,6 +60,7 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 		}
 		return usuarios;
 	}
+	
 	public void bajaUsuario(Integer id) {
 		EntityManager eManager=null;
 		try{
@@ -73,10 +77,12 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 			eManager.close();
 		}
 	}
+	
 	@Override
 	public String getName() {
 		return name;
 	}
+	
 	@Override
 	public void eliminarDatos() {
 		List<Usuario> usuarios = null;
@@ -97,4 +103,5 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 			eManager.close();
 		}
 	}
+	
 }
