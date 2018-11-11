@@ -15,6 +15,10 @@ import com.cacic.entity.Trabajo;
 
 public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 	private String name = "Revision";
+	private static RevisionMysqlDAOImpl instance = null;
+	
+	private RevisionMysqlDAOImpl() {}
+	
 	@Override
 	public Integer altaRevision(Revision revision) {
 		EntityManager eManager=null;
@@ -196,5 +200,12 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 			eManager.close();
 		}
 		return trabajos;
+	}
+
+	public static RevisionMysqlDAOImpl getInstance() {
+		if (instance == null)
+	        instance = new RevisionMysqlDAOImpl();
+	 
+	     return instance;
 	}
 }

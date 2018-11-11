@@ -11,6 +11,9 @@ import com.cacic.entity.Trabajo;
 
 public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
 	private String name = "Trabajo";
+	private static TrabajoMysqlDAOImpl instance=null;
+	
+	private TrabajoMysqlDAOImpl() {}
 	
 	public Integer altaTrabajo(Trabajo trabajo) {
 		EntityManager eManager=null;
@@ -118,5 +121,12 @@ public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
 			eManager.close();
 		}
 		return trabajos;
+	}
+
+	public static TrabajoMysqlDAOImpl getInstance() {
+		if (instance == null)
+	        instance = new TrabajoMysqlDAOImpl();
+	 
+	     return instance;
 	}
 }

@@ -11,6 +11,9 @@ import com.cacic.entity.Usuario;
 public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 	
 	private String name = "Usuario";
+	private static UsuarioMysqlDAOImpl instance = null;
+	
+	private UsuarioMysqlDAOImpl() {}
 	
 	public Integer altaUsuario(Usuario usuario) {
 		EntityManager eManager=null;
@@ -102,6 +105,13 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 		}finally{
 			eManager.close();
 		}
+	}
+
+	public static UsuarioMysqlDAOImpl getInstance() {
+		if (instance == null)
+	        instance = new UsuarioMysqlDAOImpl();
+	 
+	     return instance;
 	}
 	
 }

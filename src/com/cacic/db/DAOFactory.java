@@ -10,21 +10,21 @@ public class DAOFactory
 		switch(db.toUpperCase()) {
 		   case "MYSQL" :
 		   default : 
-		      return new RevisionMysqlDAOImpl();
+		      return RevisionMysqlDAOImpl.getInstance();
 		}
 	}
 	public static UsuarioDao getUsuarioDao(String db) {
 		switch(db.toUpperCase()) {
 		   case "MYSQL" :
 		   default : 
-		      return new UsuarioMysqlDAOImpl();
+		      return UsuarioMysqlDAOImpl.getInstance();
 		}
 	}
 	public static TrabajoDao getTrabajoDao(String db) {
 		switch(db.toUpperCase()) {
 		   case "MYSQL" :
 		   default : 
-		      return new TrabajoMysqlDAOImpl();
+		      return TrabajoMysqlDAOImpl.getInstance();
 		}
 	}
 }
