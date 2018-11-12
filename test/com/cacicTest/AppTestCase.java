@@ -265,7 +265,13 @@ public class AppTestCase extends TestCase {
 		Trabajo trabajo = new Trabajo();
 		trabajo.setAutor(usuario);
 		trabajo.setCategoria("articulo");
-		trabajo.setPalabrasClaves("matematicas,algebra");
+		
+		
+		
+		trabajo.setPalabrasClaves("matematicas,algebra"); 
+		
+		
+		
 		trabajo.setRevisiones(null);
 		usuario.addTrabajos(trabajo);
 		//Obtiene el id despues de darlo de alta
@@ -290,7 +296,13 @@ public class AppTestCase extends TestCase {
 		Integer id;
 		for(int i =0;i<3; i++) {
 			trabajo=new Trabajo(autor);
+			
+			
+			
 			trabajo.setPalabrasClaves("ciencia,fisica,quimica");
+			
+			
+			
 			id = trabajoDao.altaTrabajo(trabajo);
 			idsTrabajos.add(id);
 			trabajo.setIdTrabajo(id);

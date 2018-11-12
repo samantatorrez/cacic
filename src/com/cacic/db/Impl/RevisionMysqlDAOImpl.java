@@ -6,8 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.eclipse.persistence.config.QueryType;
-
 import com.cacic.db.MysqlDao;
 import com.cacic.db.RevisionDao;
 import com.cacic.entity.Revision;
@@ -176,6 +174,8 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 		}
 		return trabajos;
 	}
+	
+	//Cambiar por clase tema
 	@Override
 	public List<Trabajo> getTrabajosByAutorRevisorArea(Integer autorId, Integer revisorId, String area) {
 		List<Trabajo> trabajos = null;
