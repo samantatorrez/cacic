@@ -25,8 +25,9 @@ public class Trabajo {
 	private Integer idTrabajo;
 	@Column(nullable = false)
 	private String categoria;
-	@Column(nullable = false)
-	private String palabrasClaves;
+	
+	@Column(nullable = false)							//Es MANY TO MANY?
+	private List<Tema> palabrasClaves;
 	
 	@ManyToOne
 	@JoinColumn(name ="FK_autor")
@@ -41,12 +42,12 @@ public class Trabajo {
 	public Trabajo(Usuario autor) {
 		this.idTrabajo = null;
 		this.categoria = "";
-		this.palabrasClaves = "";
+		this.palabrasClaves = new ArrayList<Tema>();
 		this.autor = autor;
 		this.revisiones = new ArrayList<Revision>();
 	}
 	
-	public Trabajo(String categoria, String palabrasClaves, Usuario autor, List<Revision> revisiones) {
+	public Trabajo(String categoria, List<Tema> palabrasClaves, Usuario autor, List<Revision> revisiones) {
 		this.idTrabajo = null;
 		this.categoria = categoria;
 		this.palabrasClaves = palabrasClaves;
@@ -70,11 +71,11 @@ public class Trabajo {
 		this.categoria = categoria;
 	}
 
-	public String getPalabrasClaves() {
+	public List<Tema> getPalabrasClaves() {
 		return palabrasClaves;
 	}
 
-	public void setPalabrasClaves(String palabrasClaves) {
+	public void setPalabrasClaves(List<Tema> palabrasClaves) {
 		this.palabrasClaves = palabrasClaves;
 	}
 
