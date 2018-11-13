@@ -35,7 +35,7 @@ public class Revision {
 	public Revision() {}
 	public Revision(Usuario usuario,Trabajo trabajo) {
 		this.idRevision = null;
-		this.estado = "";
+		this.estado = "Pendiente";
 		this.fechaCreacion = new Date(System.currentTimeMillis());
 		this.evaluador = usuario;
 		this.trabajo = trabajo;
