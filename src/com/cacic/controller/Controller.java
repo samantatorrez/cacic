@@ -1,5 +1,5 @@
 package com.cacic.controller;
 
 public class Controller {
-	protected DBManager dbManager;
+	protected DBManager dbManager=new DBManager();
 }

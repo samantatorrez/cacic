@@ -1,13 +1,11 @@
 package com.cacic.db.Impl;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-
-import org.eclipse.persistence.config.QueryType;
-
 import com.cacic.db.MysqlDao;
 import com.cacic.db.RevisionDao;
 import com.cacic.entity.Revision;
@@ -55,7 +53,7 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 
 	@Override
 	public List<Revision> getRevisiones() {
-		List<Revision> revisiones = null;
+		List<Revision> revisiones = new ArrayList<Revision>();
 		EntityManager eManager = null;
 		try {
 			eManager = getEntityManager();
