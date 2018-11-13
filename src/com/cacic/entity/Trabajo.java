@@ -26,14 +26,15 @@ public class Trabajo {
 	@Column(nullable = false)
 	private String categoria;
 	
-	@Column(nullable = false)							//Es MANY TO MANY?
+	@OneToMany 
+	@JoinColumn(name = "FK_tema")
 	private List<Tema> palabrasClaves;
 	
 	@ManyToOne
-	@JoinColumn(name ="FK_autor")
+	@JoinColumn(name = "FK_autor")
 	private Usuario autor;
 	
-	@OneToMany(mappedBy="trabajo", cascade = CascadeType.REMOVE, orphanRemoval=true)
+	@OneToMany(mappedBy = "trabajo", cascade = CascadeType.REMOVE, orphanRemoval=true)
 	@NotFound(action=NotFoundAction.IGNORE)
 	private List<Revision> revisiones;
 
@@ -77,6 +78,14 @@ public class Trabajo {
 
 	public void setPalabrasClaves(List<Tema> palabrasClaves) {
 		this.palabrasClaves = palabrasClaves;
+	}
+	
+	public Tema obtenerPalabraClave(int i) {
+		return palabrasClaves.get(i);	
+	}
+	
+	public void agregarPalabraClave(Tema pal) {
+		this.palabrasClaves.add(pal);
 	}
 
 	public Usuario getAutor() {
@@ -138,9 +147,9 @@ public class Trabajo {
 		if (palabrasClaves == null) {
 			if (other.palabrasClaves != null)
 				return false;
-		} else if (!palabrasClaves.equals(other.palabrasClaves))
+		} else if (!palabrasClaves.containsAll(getPalabrasClaves()))
 			return false;
 		return true;
 	}
-	
+
 }

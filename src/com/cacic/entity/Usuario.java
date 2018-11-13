@@ -22,6 +22,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 @Entity
 @Table(name="Usuario")
 public class Usuario {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;

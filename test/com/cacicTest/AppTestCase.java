@@ -15,6 +15,8 @@ import com.cacic.db.TrabajoDao;
 import com.cacic.db.UsuarioDao;
 import com.cacic.entity.Revision;
 import com.cacic.entity.Rol;
+import com.cacic.entity.Tema;
+import com.cacic.entity.TipoPalabra;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
@@ -61,6 +63,9 @@ public class AppTestCase extends TestCase {
 
 		for (int i = 0; i < cantidadTrabajos; i++) {
 			trabajo = new Trabajo(usuario);
+//			trabajo.agregarPalabraClave(new Tema("matematicas", TipoPalabra.general));
+//			trabajo.agregarPalabraClave(new Tema("algebra", TipoPalabra.especifica));
+//			trabajo.agregarPalabraClave(new Tema("ciencia", TipoPalabra.general));
 			trabajoDao.altaTrabajo(trabajo);
 		}
 		List<Trabajo> trabajos = trabajoDao.getTrabajos();
@@ -112,6 +117,7 @@ public class AppTestCase extends TestCase {
 		//Obtine el usuario que esta en la base y lo compara con el creado 
 		assertEquals(usuario, usuarioDao.getUsuario(id));
 	}
+	
 	/*
 	 * Punto d ii
 	 */
@@ -201,6 +207,7 @@ public class AppTestCase extends TestCase {
 			assertEquals(idsRevisionesEnElRango.get(i), revisiones.get(i).getIdRevision());
 		}
 	}
+	
 	/*
 	 * Punto d iv
 	 */
@@ -229,6 +236,7 @@ public class AppTestCase extends TestCase {
 			assertEquals(idsTrabajos.get(i),trabajos.get(i).getIdTrabajo());
 		}	
 	}
+	
 	@Test
 	public void testObtenerTrabajosEnviadosARevisionByAutorCasoSinEnviar() {
 		List<Integer> idsTrabajos= new ArrayList<Integer>();
@@ -241,6 +249,7 @@ public class AppTestCase extends TestCase {
 		List<Trabajo> trabajos = revisionDao.getTrabajosByAutor(autor.getIdUsuario());
 		assertEquals(0, trabajos.size());
 	}
+	
 	/*
 	 * Punto e
 	 */
@@ -268,7 +277,7 @@ public class AppTestCase extends TestCase {
 		
 		
 		
-		trabajo.setPalabrasClaves("matematicas,algebra"); 
+	//	trabajo.setPalabrasClaves("matematicas,algebra"); 
 		
 		
 		
@@ -280,6 +289,7 @@ public class AppTestCase extends TestCase {
 		//Obtine el trabajo que esta en la base y lo compara con el creado 
 		assertEquals(trabajo, trabajoDao.getTrabajo(idT));
 	}
+	
 	/*
 	 * Punto f
 	 */
@@ -299,7 +309,7 @@ public class AppTestCase extends TestCase {
 			
 			
 			
-			trabajo.setPalabrasClaves("ciencia,fisica,quimica");
+	//		trabajo.setPalabrasClaves("ciencia,fisica,quimica");
 			
 			
 			
@@ -314,6 +324,7 @@ public class AppTestCase extends TestCase {
 			assertEquals(idsTrabajos.get(i),trabajos.get(i).getIdTrabajo());
 		}	
 	}
+	
 	/*
 	 * Punto g
 	 */
@@ -323,4 +334,5 @@ public class AppTestCase extends TestCase {
 		trabajoDao.eliminarDatos();
 		usuarioDao.eliminarDatos();
 	}
+	
 }
