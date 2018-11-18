@@ -1,4 +1,4 @@
-package test.com.cacicTest;
+package com.cacicTest;
 
 import java.sql.Date;
 import java.util.ArrayList;
