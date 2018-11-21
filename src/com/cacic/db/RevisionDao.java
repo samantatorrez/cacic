@@ -7,6 +7,7 @@ import com.cacic.entity.Revision;
 import com.cacic.entity.Trabajo;
 
 public interface RevisionDao {
+	
 	public Integer altaRevision(Revision revision);
 	public Revision getRevision(Integer id);
 	public List<Revision> getRevisiones();
@@ -16,4 +17,5 @@ public interface RevisionDao {
 	List<Revision> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta);
 	List<Trabajo> getTrabajosByAutor(Integer id);
 	List<Trabajo> getTrabajosByAutorRevisorArea(Integer autorId, Integer revisorId, String area);
+	
 }

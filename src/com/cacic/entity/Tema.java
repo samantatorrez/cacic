@@ -1,0 +1,67 @@
+package com.cacic.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "Tema")
+public class Tema {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String palabra;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private TipoPalabra Tipo;
+	
+	/**
+	 * @param palabra
+	 * @param tipo
+	 */
+	public Tema(String palabra, TipoPalabra tipo) {
+		this.palabra = palabra;
+		Tipo = tipo;
+	}
+
+	/**
+	 * 
+	 */
+	public Tema() {
+	}
+
+	/**
+	 * @return the palabra
+	 */
+	public String getPalabra() {
+		return palabra;
+	}
+
+	/**
+	 * @param palabra the palabra to set
+	 */
+	public void setPalabra(String palabra) {
+		this.palabra = palabra;
+	}
+
+	/**
+	 * @return the tipo
+	 */
+	public TipoPalabra getTipo() {
+		return Tipo;
+	}
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(TipoPalabra tipo) {
+		Tipo = tipo;
+	}
+	
+	
+}

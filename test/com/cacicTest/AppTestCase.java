@@ -11,10 +11,13 @@ import org.junit.Test;
 
 import com.cacic.db.DAOFactory;
 import com.cacic.db.RevisionDao;
+import com.cacic.db.TemaDao;
 import com.cacic.db.TrabajoDao;
 import com.cacic.db.UsuarioDao;
 import com.cacic.entity.Revision;
 import com.cacic.entity.Rol;
+import com.cacic.entity.Tema;
+import com.cacic.entity.TipoPalabra;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
@@ -24,6 +27,7 @@ public class AppTestCase extends TestCase {
 	private UsuarioDao usuarioDao;
 	private TrabajoDao trabajoDao;
 	private RevisionDao revisionDao;
+	private TemaDao temaDao;
 	private static final String DB = "MYSQL";
 
 	@Before
@@ -31,6 +35,7 @@ public class AppTestCase extends TestCase {
 		usuarioDao = DAOFactory.getUsuarioDao(DB);
 		trabajoDao = DAOFactory.getTrabajoDao(DB);
 		revisionDao = DAOFactory.getRevisionDao(DB);
+		temaDao = DAOFactory.getTemaDao(DB);
 	}
 
 	/*
@@ -105,7 +110,14 @@ public class AppTestCase extends TestCase {
 		usuario.setLugarTrabajo("globant");
 		usuario.setNombreUsuario("testUser");
 		usuario.setRol(Rol.autor);
-		usuario.setTemas("ciencias,programación");
+		
+		Tema t1 = new Tema("ciencias", TipoPalabra.general);
+		Tema t2 = new Tema("programación", TipoPalabra.general);
+		List<Tema> palabras = new ArrayList<Tema>();
+		palabras.add(t1);
+		palabras.add(t2);
+		
+		usuario.setTemas(palabras);
 		//Obtiene el id despues de darlo de alta
 		Integer id = usuarioDao.altaUsuario(usuario);
 		usuario.setIdUsuario(id);
@@ -257,7 +269,14 @@ public class AppTestCase extends TestCase {
 		usuario.setLugarTrabajo("UNICEN");
 		usuario.setNombreUsuario("testUser");
 		usuario.setRol(Rol.autor);
-		usuario.setTemas("matematicas,algebra");
+		
+		Tema t1 = new Tema("matematicas", TipoPalabra.general);
+		Tema t2 = new Tema("algebra", TipoPalabra.especifica);
+		List<Tema> palabras = new ArrayList<Tema>();
+		palabras.add(t1);
+		palabras.add(t2);
+		
+		usuario.setTemas(palabras);
 		//Obtiene el id despues de darlo de alta
 		Integer idU = usuarioDao.altaUsuario(usuario);
 		usuario.setIdUsuario(idU);
@@ -265,7 +284,9 @@ public class AppTestCase extends TestCase {
 		Trabajo trabajo = new Trabajo();
 		trabajo.setAutor(usuario);
 		trabajo.setCategoria("articulo");
-		trabajo.setPalabrasClaves("matematicas,algebra");
+		
+		trabajo.setPalabrasClaves(palabras);
+		
 		trabajo.setRevisiones(null);
 		usuario.addTrabajos(trabajo);
 		//Obtiene el id despues de darlo de alta
@@ -290,7 +311,16 @@ public class AppTestCase extends TestCase {
 		Integer id;
 		for(int i =0;i<3; i++) {
 			trabajo=new Trabajo(autor);
-			trabajo.setPalabrasClaves("ciencia,fisica,quimica");
+			
+			Tema t1 = new Tema("ciencia", TipoPalabra.general);
+			Tema t2 = new Tema("fisica", TipoPalabra.especifica);
+			Tema t3 = new Tema("quimica", TipoPalabra.especifica);
+			List<Tema> palabras = new ArrayList<Tema>();
+			palabras.add(t1);
+			palabras.add(t2);
+			palabras.add(t3);
+			trabajo.setPalabrasClaves(palabras);
+			
 			id = trabajoDao.altaTrabajo(trabajo);
 			idsTrabajos.add(id);
 			trabajo.setIdTrabajo(id);

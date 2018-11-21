@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,7 +40,9 @@ public class Usuario {
 	@Column(nullable = false)
 	private String contrasenia;
 
-	private String temas;
+	@Column
+    @ElementCollection(targetClass=Tema.class)
+	private List<Tema> temas;
 	private Date fechaNac;
 	private String domicilio;
 	private int codPostal;
@@ -60,7 +63,7 @@ public class Usuario {
 		this.lugarTrabajo = "";
 		this.nombreUsuario = "root";
 		setContrasenia("1234");
-		this.temas = "";
+		this.temas = new ArrayList<Tema>();
 		this.fechaNac = null;
 		this.domicilio = "";
 		this.codPostal = -1;
@@ -69,7 +72,7 @@ public class Usuario {
 	}
 
 	public Usuario( String nombre, String apellido, Rol rol, String lugarTrabajo, String nombreUsuario,
-			String contrasenia, String temas, Date fechaNac, String domicilio, int codPostal, List<Revision> revisiones,
+			String contrasenia, List<Tema> temas, Date fechaNac, String domicilio, int codPostal, List<Revision> revisiones,
 			List<Trabajo> trabajos) {
 		this.idUsuario = null;
 		this.nombre = nombre;
@@ -130,10 +133,10 @@ public class Usuario {
 		passwordEncryptor.setPlainDigest(true);
 		this.contrasenia = passwordEncryptor.encryptPassword(contrasenia);
 	}
-	public String getTemas() {
+	public List<Tema> getTemas() {
 		return temas;
 	}
-	public void setTemas(String temas) {
+	public void setTemas(List<Tema> temas) {
 		this.temas = temas;
 	}
 	public Date getFechaNac() {
