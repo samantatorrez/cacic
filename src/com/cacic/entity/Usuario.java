@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,6 +22,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 @Entity
 @Table(name="Usuario")
 public class Usuario {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;
@@ -40,9 +40,7 @@ public class Usuario {
 	@Column(nullable = false)
 	private String contrasenia;
 
-	@Column
-    @ElementCollection(targetClass=Tema.class)
-	private List<Tema> temas;
+	private String temas;
 	private Date fechaNac;
 	private String domicilio;
 	private int codPostal;
@@ -63,7 +61,7 @@ public class Usuario {
 		this.lugarTrabajo = "";
 		this.nombreUsuario = "root";
 		setContrasenia("1234");
-		this.temas = new ArrayList<Tema>();
+		this.temas = "";
 		this.fechaNac = null;
 		this.domicilio = "";
 		this.codPostal = -1;
@@ -72,7 +70,7 @@ public class Usuario {
 	}
 
 	public Usuario( String nombre, String apellido, Rol rol, String lugarTrabajo, String nombreUsuario,
-			String contrasenia, List<Tema> temas, Date fechaNac, String domicilio, int codPostal, List<Revision> revisiones,
+			String contrasenia, String temas, Date fechaNac, String domicilio, int codPostal, List<Revision> revisiones,
 			List<Trabajo> trabajos) {
 		this.idUsuario = null;
 		this.nombre = nombre;
@@ -133,10 +131,10 @@ public class Usuario {
 		passwordEncryptor.setPlainDigest(true);
 		this.contrasenia = passwordEncryptor.encryptPassword(contrasenia);
 	}
-	public List<Tema> getTemas() {
+	public String getTemas() {
 		return temas;
 	}
-	public void setTemas(List<Tema> temas) {
+	public void setTemas(String temas) {
 		this.temas = temas;
 	}
 	public Date getFechaNac() {

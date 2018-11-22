@@ -11,6 +11,5 @@ public interface TemaDao {
 	public List<Tema> getTemas();
 	public void bajaTema(String palabra);
 	public void eliminarDatos();
-	public boolean esEspecifico();
 	
 }

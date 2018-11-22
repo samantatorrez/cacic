@@ -119,14 +119,4 @@ public class TemaMysqlDAOImpl extends MysqlDao implements TemaDao {
 	     return instance;
 	}
 	
-	public boolean esEspecifico() {
-		List<Tema> temas = this.getTemas();
-		for (Tema tema : temas) {
-			if (tema.getTipo() == TipoPalabra.especifica) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 }

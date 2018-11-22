@@ -110,14 +110,7 @@ public class AppTestCase extends TestCase {
 		usuario.setLugarTrabajo("globant");
 		usuario.setNombreUsuario("testUser");
 		usuario.setRol(Rol.autor);
-		
-		Tema t1 = new Tema("ciencias", TipoPalabra.general);
-		Tema t2 = new Tema("programación", TipoPalabra.general);
-		List<Tema> palabras = new ArrayList<Tema>();
-		palabras.add(t1);
-		palabras.add(t2);
-		
-		usuario.setTemas(palabras);
+		usuario.setTemas("ciencias,programación");
 		//Obtiene el id despues de darlo de alta
 		Integer id = usuarioDao.altaUsuario(usuario);
 		usuario.setIdUsuario(id);
@@ -269,14 +262,7 @@ public class AppTestCase extends TestCase {
 		usuario.setLugarTrabajo("UNICEN");
 		usuario.setNombreUsuario("testUser");
 		usuario.setRol(Rol.autor);
-		
-		Tema t1 = new Tema("matematicas", TipoPalabra.general);
-		Tema t2 = new Tema("algebra", TipoPalabra.especifica);
-		List<Tema> palabras = new ArrayList<Tema>();
-		palabras.add(t1);
-		palabras.add(t2);
-		
-		usuario.setTemas(palabras);
+		usuario.setTemas("matematicas,algebra");
 		//Obtiene el id despues de darlo de alta
 		Integer idU = usuarioDao.altaUsuario(usuario);
 		usuario.setIdUsuario(idU);
@@ -285,7 +271,7 @@ public class AppTestCase extends TestCase {
 		trabajo.setAutor(usuario);
 		trabajo.setCategoria("articulo");
 		
-		trabajo.setPalabrasClaves(palabras);
+		trabajo.setPalabrasClaves("matematicas,algebra");
 		
 		trabajo.setRevisiones(null);
 		usuario.addTrabajos(trabajo);
@@ -311,16 +297,7 @@ public class AppTestCase extends TestCase {
 		Integer id;
 		for(int i =0;i<3; i++) {
 			trabajo=new Trabajo(autor);
-			
-			Tema t1 = new Tema("ciencia", TipoPalabra.general);
-			Tema t2 = new Tema("fisica", TipoPalabra.especifica);
-			Tema t3 = new Tema("quimica", TipoPalabra.especifica);
-			List<Tema> palabras = new ArrayList<Tema>();
-			palabras.add(t1);
-			palabras.add(t2);
-			palabras.add(t3);
-			trabajo.setPalabrasClaves(palabras);
-			
+			trabajo.setPalabrasClaves("ciencia,fisica,quimica");
 			id = trabajoDao.altaTrabajo(trabajo);
 			idsTrabajos.add(id);
 			trabajo.setIdTrabajo(id);
@@ -340,5 +317,6 @@ public class AppTestCase extends TestCase {
 		revisionDao.eliminarDatos();
 		trabajoDao.eliminarDatos();
 		usuarioDao.eliminarDatos();
+		temaDao.eliminarDatos();
 	}
 }
