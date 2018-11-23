@@ -24,4 +24,5 @@ public class CriterioRevisorConocimientoTemas extends CriterioSimple {
 		}
 		return contieneTodos;
 	}
+	
 }

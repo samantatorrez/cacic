@@ -11,10 +11,13 @@ import org.junit.Test;
 
 import com.cacic.db.DAOFactory;
 import com.cacic.db.RevisionDao;
+import com.cacic.db.TemaDao;
 import com.cacic.db.TrabajoDao;
 import com.cacic.db.UsuarioDao;
 import com.cacic.entity.Revision;
 import com.cacic.entity.Rol;
+import com.cacic.entity.Tema;
+import com.cacic.entity.TipoPalabra;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
@@ -24,6 +27,7 @@ public class AppTestCase extends TestCase {
 	private UsuarioDao usuarioDao;
 	private TrabajoDao trabajoDao;
 	private RevisionDao revisionDao;
+	private TemaDao temaDao;
 	private static final String DB = "MYSQL";
 
 	@Before
@@ -31,6 +35,7 @@ public class AppTestCase extends TestCase {
 		usuarioDao = DAOFactory.getUsuarioDao(DB);
 		trabajoDao = DAOFactory.getTrabajoDao(DB);
 		revisionDao = DAOFactory.getRevisionDao(DB);
+		temaDao = DAOFactory.getTemaDao(DB);
 	}
 
 	/*
@@ -265,7 +270,9 @@ public class AppTestCase extends TestCase {
 		Trabajo trabajo = new Trabajo();
 		trabajo.setAutor(usuario);
 		trabajo.setCategoria("articulo");
+		
 		trabajo.setPalabrasClaves("matematicas,algebra");
+		
 		trabajo.setRevisiones(null);
 		usuario.addTrabajos(trabajo);
 		//Obtiene el id despues de darlo de alta
@@ -310,5 +317,6 @@ public class AppTestCase extends TestCase {
 		revisionDao.eliminarDatos();
 		trabajoDao.eliminarDatos();
 		usuarioDao.eliminarDatos();
+		temaDao.eliminarDatos();
 	}
 }
