@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,11 +12,10 @@ import javax.persistence.Table;
 public class Tema {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String palabra;
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private TipoPalabra Tipo;
+	private TipoPalabra tipo;
 	
 	/**
 	 * @param palabra
@@ -26,7 +23,7 @@ public class Tema {
 	 */
 	public Tema(String palabra, TipoPalabra tipo) {
 		this.palabra = palabra;
-		Tipo = tipo;
+		this.tipo = tipo;
 	}
 
 	/**
@@ -53,14 +50,14 @@ public class Tema {
 	 * @return the tipo
 	 */
 	public TipoPalabra getTipo() {
-		return Tipo;
+		return tipo;
 	}
 
 	/**
 	 * @param tipo the tipo to set
 	 */
 	public void setTipo(TipoPalabra tipo) {
-		Tipo = tipo;
+		this.tipo = tipo;
 	}
 	
 	

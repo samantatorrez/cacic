@@ -64,6 +64,30 @@ public class UsuarioMysqlDAOImpl extends MysqlDao implements UsuarioDao{
 		return usuarios;
 	}
 	
+	public Usuario actualizaUsuario(Integer id, Usuario actual) {
+		Usuario usuario = null;
+		EntityManager eManager=null;
+		try{
+			eManager = getEntityManager();
+			usuario = eManager.find(Usuario.class, id);
+			
+			eManager.getTransaction().begin();
+			usuario.setApellido(actual.getApellido());
+			usuario.setNombre(actual.getNombre());
+			eManager.flush();
+			eManager.getTransaction().commit();
+			eManager.close();
+			
+			return usuario;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+		}finally{
+			eManager.close();
+		}
+		return usuario;
+	}
+	
 	public void bajaUsuario(Integer id) {
 		EntityManager eManager=null;
 		try{

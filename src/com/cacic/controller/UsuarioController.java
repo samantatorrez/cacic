@@ -13,9 +13,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import com.cacic.dto.TrabajoDTO;
 import com.cacic.dto.UsuarioDTO;
 import com.cacic.entity.Tema;
 import com.cacic.entity.TipoPalabra;
+import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
 @Path("/usuarios")
@@ -79,8 +81,17 @@ public class UsuarioController extends Controller {
 	@PUT
 	@Path("/{idUsuario}")
 	@Produces("application/json")
-	public Response actualizarUsuario(@PathParam("idUsuario") Integer idUsuario) {
-		
+	public Response actualizarUsuario(@PathParam("idUsuario") Integer idUsuario, Usuario user) {
+		Usuario resultado = dbManager.getUsuarioDao().getUsuario(idUsuario);
+		if (resultado == null) {
+			return Response.status(400).entity("No se encontro el usuario pasado.").build();
+		}
+		try {
+			dbManager.getUsuarioDao().actualizaUsuario(idUsuario, user);
+			return Response.ok().build();
+		} catch (Exception e) {
+			return Response.status(400).entity("Error al actualizar el usuario en la base").build();
+		}
 	}
 
 	@DELETE

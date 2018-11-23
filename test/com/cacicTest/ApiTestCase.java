@@ -4,31 +4,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.UnsupportedCharsetException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
-
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -46,11 +33,9 @@ import com.cacic.entity.Rol;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 
 public class ApiTestCase {
@@ -103,6 +88,7 @@ public class ApiTestCase {
 		try {
 			/*Tests Usuario Api*/
 			crearUsuario();
+			modificarUsurio();
 //			getUsuario();
 //			getUsuarios();
 //			esEspecifico();
@@ -616,6 +602,7 @@ public class ApiTestCase {
 		user.setCodPostal(7000);
 		
 		Integer idUser = dbManager.getUsuarioDao().altaUsuario(user);
+		user.setIdUsuario(idUser);
 		
 		String url = BASE_URL + USUARIOS +"/" + idUser;
 		
@@ -631,7 +618,38 @@ public class ApiTestCase {
 		assertEquals(result.getIdUsuario(),idUser);
 	}
 	
-	
+	public void modificarUsurio() throws ClientProtocolException, IOException {
+		//Creo un usuario
+		Usuario user = new Usuario();
+		user.setNombre("Pepe");
+		user.setApellido("Flores");
+		user.setRol(Rol.autor);
+		user.setLugarTrabajo("ISISTAN");
+		user.setNombreUsuario("pFlores");
+		user.setContrasenia("987654");
+		user.setTemas("programacion, cs de la computacion");
+		user.setFechaNac(new Date(System.currentTimeMillis()));
+		user.setDomicilio("calle 951");
+		user.setCodPostal(7000);
+		Integer idUser = dbManager.getUsuarioDao().altaUsuario(user);
+		
+		String url = BASE_URL + USUARIOS + "/" + idUser;
+		
+		HttpPut put = new HttpPut(url);
+		HttpResponse response = client.execute(put);
+		
+		assertEquals(response.getStatusLine().getStatusCode(),200);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode jsonObject = objectMapper.createObjectNode();
+		//Le modifico el nombre
+		jsonObject.put("nombre","Pepito");
+		jsonObject.put("apellido","Flores");
+		String json_string = EntityUtils.toString(response.getEntity());
+		UsuarioDTO result = objectMapper.readValue(json_string, UsuarioDTO.class);
+			
+		assertEquals(result.getIdUsuario(),idUser);
+	}
 	
 	@After
 	public void tearDown() {
