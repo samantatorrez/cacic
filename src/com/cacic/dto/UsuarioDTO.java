@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.cacic.entity.Revision;
 import com.cacic.entity.Rol;
-import com.cacic.entity.Tema;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
@@ -58,6 +57,8 @@ public class UsuarioDTO {
 		this.revisiones = usuario.getRevisiones();
 		this.trabajos = usuario.getTrabajos();
 	}
+	
+	public UsuarioDTO () {}
 
 	public Integer getIdUsuario() {
 		return idUsuario;
