@@ -12,6 +12,8 @@ public class RevisionDTO {
 	private Integer idRevisor;
 	private Integer idTrabajo;
 	
+	public RevisionDTO() {}
+	
 	public RevisionDTO(Integer idRevision, String estado, Date fechaCreacion, Integer idRevisor, Integer idTrabajo) {
 		this.idRevision = idRevision;
 		this.estado = estado;

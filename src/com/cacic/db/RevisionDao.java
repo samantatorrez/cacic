@@ -13,7 +13,7 @@ public interface RevisionDao {
 	public void bajaRevision(Integer id);
 	public void eliminarDatos();
 	List<Trabajo> getTrabajosByEvaluador(Integer id);
-	List<Revision> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta);
+	List<Trabajo> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta);
 	List<Trabajo> getTrabajosByAutor(Integer id);
 	List<Trabajo> getTrabajosByAutorRevisorArea(Integer autorId, Integer revisorId, String area);
 }

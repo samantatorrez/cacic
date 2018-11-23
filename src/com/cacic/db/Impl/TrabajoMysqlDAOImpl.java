@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 
 import com.cacic.db.MysqlDao;
 import com.cacic.db.TrabajoDao;
+import com.cacic.entity.Categoria;
 import com.cacic.entity.Trabajo;
 
 public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
@@ -111,7 +112,7 @@ public class TrabajoMysqlDAOImpl extends MysqlDao implements TrabajoDao{
 			eManager.getTransaction().begin();
 			TypedQuery<Trabajo> query = eManager.createQuery(
 			         "Select a From "+getName()+" a Where categoria=:categoria", Trabajo.class);
-			query.setParameter("categoria", categoria );
+			query.setParameter("categoria", Categoria.valueOf(categoria) );
 			trabajos = query.getResultList();
 			eManager.getTransaction().commit();
 		} catch (Exception e) {

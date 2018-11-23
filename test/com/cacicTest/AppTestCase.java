@@ -11,8 +11,10 @@ import org.junit.Test;
 
 import com.cacic.db.DAOFactory;
 import com.cacic.db.RevisionDao;
+import com.cacic.db.TemaDao;
 import com.cacic.db.TrabajoDao;
 import com.cacic.db.UsuarioDao;
+import com.cacic.entity.Categoria;
 import com.cacic.entity.Revision;
 import com.cacic.entity.Rol;
 import com.cacic.entity.Trabajo;
@@ -24,6 +26,7 @@ public class AppTestCase extends TestCase {
 	private UsuarioDao usuarioDao;
 	private TrabajoDao trabajoDao;
 	private RevisionDao revisionDao;
+	private TemaDao temaDao;
 	private static final String DB = "MYSQL";
 
 	@Before
@@ -31,6 +34,7 @@ public class AppTestCase extends TestCase {
 		usuarioDao = DAOFactory.getUsuarioDao(DB);
 		trabajoDao = DAOFactory.getTrabajoDao(DB);
 		revisionDao = DAOFactory.getRevisionDao(DB);
+		temaDao = DAOFactory.getTemaDao(DB);
 	}
 
 	/*
@@ -77,7 +81,7 @@ public class AppTestCase extends TestCase {
 
 		for (int i = 0; i < cantidadTrabajos; i++) {
 			trabajo = new Trabajo(usuario);
-			trabajo.setCategoria("Articulo");
+			trabajo.setCategoria(Categoria.resumen);
 			trabajoDao.altaTrabajo(trabajo);
 		}
 		for (int i = 0; i < cantidadTrabajos; i++) {
@@ -85,7 +89,7 @@ public class AppTestCase extends TestCase {
 			trabajoDao.altaTrabajo(trabajo);
 		}
 
-		List<Trabajo> trabajos = trabajoDao.getTrabajosCategoria("Articulo");
+		List<Trabajo> trabajos = trabajoDao.getTrabajosCategoria(Categoria.resumen.name());
 		assertEquals(cantidadTrabajos, trabajos.size());
 	}
 	
@@ -195,11 +199,8 @@ public class AppTestCase extends TestCase {
 		review.setFechaCreacion(fechaArribaDelRango);
 		revisionDao.altaRevision(review);
 		
-		List<Revision> revisiones = revisionDao.getTrabajosByEvaluadorAndDateRange(revisor.getIdUsuario(),desde,hasta);
-		assertEquals(idsRevisionesEnElRango.size(),revisiones.size());
-		for(int i = 0; i<3;i++) {
-			assertEquals(idsRevisionesEnElRango.get(i), revisiones.get(i).getIdRevision());
-		}
+		List<Trabajo> trabajos = revisionDao.getTrabajosByEvaluadorAndDateRange(revisor.getIdUsuario(),desde,hasta);
+		assertEquals(idsRevisionesEnElRango.size(),trabajos.size());
 	}
 	/*
 	 * Punto d iv
@@ -264,7 +265,7 @@ public class AppTestCase extends TestCase {
 		//Crea un trabajo
 		Trabajo trabajo = new Trabajo();
 		trabajo.setAutor(usuario);
-		trabajo.setCategoria("articulo");
+		trabajo.setCategoria(Categoria.articulo);
 		trabajo.setPalabrasClaves("matematicas,algebra");
 		trabajo.setRevisiones(null);
 		usuario.addTrabajos(trabajo);
@@ -310,5 +311,6 @@ public class AppTestCase extends TestCase {
 		revisionDao.eliminarDatos();
 		trabajoDao.eliminarDatos();
 		usuarioDao.eliminarDatos();
+		temaDao.eliminarDatos();
 	}
 }

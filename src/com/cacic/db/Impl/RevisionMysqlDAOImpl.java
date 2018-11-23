@@ -132,19 +132,19 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 		}
 	}
 	@Override
-	public List<Revision> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta) {
-		List<Revision> revisiones = null;
+	public List<Trabajo> getTrabajosByEvaluadorAndDateRange(Integer id, Date desde, Date hasta) {
+		List<Trabajo> trabajos = null;
 		EntityManager eManager = null;
 		try {
 			eManager = getEntityManager();
 			eManager.getTransaction().begin();
-			TypedQuery<Revision> query = eManager.createQuery(
-			         "Select a From "+getName()+" a Where a.evaluador.idUsuario=:id "
-			         		+ "And a.fechaCreacion<=:hasta And a.fechaCreacion>=:desde", Revision.class);
+			TypedQuery<Trabajo> query = eManager.createQuery(
+			         "Select a.trabajo From "+getName()+" a Where a.evaluador.idUsuario=:id "
+			         		+ "And a.fechaCreacion<=:hasta And a.fechaCreacion>=:desde", Trabajo.class);
 			query.setParameter("id", id);
 			query.setParameter("desde", desde);
 			query.setParameter("hasta", hasta);
-			revisiones = query.getResultList();
+			trabajos = query.getResultList();
 			eManager.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -152,7 +152,7 @@ public class RevisionMysqlDAOImpl extends MysqlDao implements RevisionDao{
 		}finally{
 			eManager.close();
 		}
-		return revisiones;
+		return trabajos;
 	}
 	@Override
 	public List<Trabajo> getTrabajosByAutor(Integer id) {

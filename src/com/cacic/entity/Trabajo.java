@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,14 +19,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.cacic.dto.TrabajoDTO;
+
 @Entity
 @Table(name="Trabajo")
 public class Trabajo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idTrabajo;
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private String categoria;
+	private Categoria categoria;
 	@Column(nullable = false)
 	private String palabrasClaves;
 	
@@ -40,18 +45,26 @@ public class Trabajo {
 	
 	public Trabajo(Usuario autor) {
 		this.idTrabajo = null;
-		this.categoria = "";
+		this.categoria = Categoria.articulo;
 		this.palabrasClaves = "";
 		this.autor = autor;
 		this.revisiones = new ArrayList<Revision>();
 	}
 	
-	public Trabajo(String categoria, String palabrasClaves, Usuario autor, List<Revision> revisiones) {
+	public Trabajo(Categoria categoria, String palabrasClaves, Usuario autor, List<Revision> revisiones) {
 		this.idTrabajo = null;
 		this.categoria = categoria;
 		this.palabrasClaves = palabrasClaves;
 		this.autor = autor;
 		this.revisiones = revisiones;
+	}
+	
+	public Trabajo(TrabajoDTO trabajo, Usuario autor) {
+		this.idTrabajo = null;
+		this.categoria = Categoria.valueOf(trabajo.getCategoria());
+		this.palabrasClaves = trabajo.getPalabrasClaves();
+		this.autor = autor;
+		this.revisiones =  new ArrayList<Revision>();
 	}
 
 	public Integer getIdTrabajo() {
@@ -62,11 +75,11 @@ public class Trabajo {
 		this.idTrabajo = idTrabajo;
 	}
 
-	public String getCategoria() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 
