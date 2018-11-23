@@ -39,8 +39,10 @@ import org.junit.Test;
 import com.cacic.controller.DBManager;
 import com.cacic.dto.RevisionDTO;
 import com.cacic.dto.TrabajoDTO;
+import com.cacic.dto.UsuarioDTO;
 import com.cacic.entity.Categoria;
 import com.cacic.entity.Revision;
+import com.cacic.entity.Rol;
 import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -63,6 +65,7 @@ public class ApiTestCase {
 	public final String AUTOR = "/autor";
 	public final String REVISOR = "/revisor";
 	public final String AREA = "/area";
+	public final String USUARIOS = "/usuarios";
 	
 	@Test
 	public void testRESTRevision()  {
@@ -95,6 +98,20 @@ public class ApiTestCase {
 		}
 	}
 	
+	@Test
+	public void testRESTUsuario()  {
+		try {
+			/*Tests Usuario Api*/
+			crearUsuario();
+//			getUsuario();
+//			getUsuarios();
+//			esEspecifico();
+//			bajaUsuario();
+		} catch (Exception e) {
+			fail("Exception thrown" + e.getMessage());
+		}
+	}
+	
 	/*Tests Revision Api*/
 	
 	/*
@@ -114,7 +131,7 @@ public class ApiTestCase {
 		revisor.setTemas("ciencia,tic");
 		
 		Integer idAutor = dbManager.getUsuarioDao().altaUsuario(autor);
-		Integer idRevisor =dbManager.getUsuarioDao().altaUsuario(revisor);
+		Integer idRevisor = dbManager.getUsuarioDao().altaUsuario(revisor);
 		autor.setIdUsuario(idAutor);
 		revisor.setIdUsuario(idRevisor);
 
@@ -290,6 +307,7 @@ public class ApiTestCase {
 		TrabajoDTO result = getTrabajoDTO(response);
 		assertEquals(result,trabajoDTO);
 	}
+	
 	public void crearTrabajo() throws UnsupportedCharsetException, ClientProtocolException, IOException {
 		Usuario autor = new Usuario();
 		autor.setNombre("autor");
@@ -325,6 +343,7 @@ public class ApiTestCase {
 		assertEquals(result.getCategoria(),trabajoDTO.getCategoria());
 		assertEquals(result.getPalabrasClaves(),trabajoDTO.getPalabrasClaves());
 	}
+	
 	public void getTrabajos() throws ClientProtocolException, IOException {
 		String url = BASE_URL + TRABAJOS +"/";
 		HttpGet get = new HttpGet(url);
@@ -575,6 +594,41 @@ public class ApiTestCase {
 		HttpResponse response = client.execute(get);
 		assertEquals(response.getStatusLine().getStatusCode(),200);
 		assertTrue(getTrabajosDTO(response).length==2);
+	}
+	
+	/*Tests Usuario Api*/
+	
+	/*
+	 * Punto i: Crear usuarios.
+	 * 
+	 */
+	public void crearUsuario() throws ClientProtocolException, IOException {
+		Usuario user = new Usuario();
+		user.setNombre("Juan");
+		user.setApellido("Perez");
+		user.setRol(Rol.autor);
+		user.setLugarTrabajo("PLADEMA");
+		user.setNombreUsuario("jPerez");
+		user.setContrasenia("123456");
+		user.setTemas("programacion, bases de datos");
+		user.setFechaNac(new Date(System.currentTimeMillis()));
+		user.setDomicilio("calle 123");
+		user.setCodPostal(7000);
+		
+		Integer idUser = dbManager.getUsuarioDao().altaUsuario(user);
+		
+		String url = BASE_URL + USUARIOS +"/" + idUser;
+		
+		HttpPost post = new HttpPost(url);
+		HttpResponse response = client.execute(post);
+		
+		assertEquals(response.getStatusLine().getStatusCode(),200);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json_string = EntityUtils.toString(response.getEntity());
+		UsuarioDTO result = objectMapper.readValue(json_string, UsuarioDTO.class);
+		
+		assertEquals(result.getIdUsuario(),idUser);
 	}
 	
 	
