@@ -44,7 +44,7 @@ public class UsuarioController extends Controller{
 	}
 	
 	@GET
-	@Path("/{idUsuario}")
+	@Path("/temasespecificos/{idUsuario}")
 	@Produces("application/json")
 	public Response esEspecifico(@PathParam("idUsuario") Integer idUsuario) {
 		Usuario usuario = dbManager.getUsuarioDao().getUsuario(idUsuario);
@@ -61,6 +61,31 @@ public class UsuarioController extends Controller{
 			}
 		}
 		return Response.status(400).entity("El usuario no es especialista en los temas.").build();
+	}
+	
+	@POST
+	@Path("/{idUsuario}")
+	@Produces("application/json")
+	public Response altaUsuario(@PathParam("idUsuario") Integer idUsuario) {
+		dbManager = new DBManager();
+		if(idUsuario == null) {
+			return Response.status(400).entity("idUsuario no valido").build();
+		}
+		Usuario usuario = dbManager.getUsuarioDao().getUsuario(idUsuario);
+		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+		return Response.ok().entity(usuarioDTO).build();
+	}
+	
+	@DELETE
+	@Path("/{idUsuario}")
+	@Produces("application/json")
+	public Response bajaUsuario(@PathParam("idUsuario") Integer idUsuario) {
+		Usuario usuario = dbManager.getUsuarioDao().getUsuario(idUsuario);
+		if(usuario == null) {
+			return Response.status(400).entity("No existe ese usuario").build();
+		}
+		dbManager.getUsuarioDao().bajaUsuario(idUsuario);
+		return Response.ok().build();
 	}
 
 }
