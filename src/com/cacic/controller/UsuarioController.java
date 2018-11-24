@@ -1,5 +1,6 @@
 package com.cacic.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import com.cacic.dto.TrabajoDTO;
 import com.cacic.dto.UsuarioDTO;
+import com.cacic.entity.Rol;
 import com.cacic.entity.Tema;
 import com.cacic.entity.TipoPalabra;
 import com.cacic.entity.Trabajo;
@@ -66,16 +68,32 @@ public class UsuarioController extends Controller {
 	}
 
 	@POST
-	@Path("/{idUsuario}")
 	@Produces("application/json")
-	public Response altaUsuario(@PathParam("idUsuario") Integer idUsuario) {
-		dbManager = new DBManager();
-		if (idUsuario == null) {
+	public Response altaUsuario(UsuarioDTO user) {
+		try {
+		if (user == null) {
 			return Response.status(400).entity("idUsuario no valido").build();
 		}
-		Usuario usuario = dbManager.getUsuarioDao().getUsuario(idUsuario);
-		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
-		return Response.ok().entity(usuarioDTO).build();
+		Usuario usuario = new Usuario();
+		usuario.setApellido(user.getApellido());
+		usuario.setCodPostal(user.getCodPostal());
+		usuario.setContrasenia(user.getContrasenia());
+		usuario.setDomicilio(user.getContrasenia());
+		if (user.getFechaNac()!="") {
+			usuario.setFechaNac(new Date(Long.parseLong(user.getFechaNac())));
+		}
+		usuario.setLugarTrabajo(user.getLugarTrabajo());
+		usuario.setNombre(user.getNombre());
+		usuario.setNombreUsuario(user.getNombreUsuario());
+		usuario.setRol(Rol.valueOf(user.getRol()));
+		usuario.setTemas(user.getTemas());
+		
+		Integer id = dbManager.getUsuarioDao().altaUsuario(usuario);
+		user.setIdUsuario(id);
+		return Response.ok().entity(user).build();
+		} catch (Exception e) {
+			return Response.status(400).entity("No se pudó crear el usuario").build();
+		}
 	}
 	
 	@PUT

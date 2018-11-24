@@ -10,17 +10,17 @@ public class UsuarioDTO {
 	private Integer idUsuario;
 	private String nombre;
 	private String apellido;
-	private Rol rol;
+	private String rol;
 	private String lugarTrabajo;
 	private String nombreUsuario;
 	private String contrasenia;
 	private String temas;
-	private Date fechaNac;
+	private String fechaNac;
 	private String domicilio;
 	private int codPostal;
 	
-	public UsuarioDTO(Integer idUsuario, String nombre, String apellido, Rol rol, String lugarTrabajo,
-			String nombreUsuario, String contrasenia, String temas, Date fechaNac, String domicilio, int codPostal) {
+	public UsuarioDTO(Integer idUsuario, String nombre, String apellido, String rol, String lugarTrabajo,
+			String nombreUsuario, String contrasenia, String temas, String fechaNac, String domicilio, int codPostal) {
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -38,12 +38,12 @@ public class UsuarioDTO {
 		this.idUsuario = usuario.getIdUsuario();
 		this.nombre = usuario.getNombre();
 		this.apellido = usuario.getApellido();
-		this.rol = usuario.getRol();
+		this.rol = usuario.getRol().name();
 		this.lugarTrabajo = usuario.getLugarTrabajo();
 		this.nombreUsuario = usuario.getNombreUsuario();
 		this.contrasenia = usuario.getContrasenia();
 		this.temas = usuario.getTemas();
-		this.fechaNac = usuario.getFechaNac();
+		this.fechaNac = usuario.getFechaNac().toString();
 		this.domicilio = usuario.getDomicilio();
 		this.codPostal = usuario.getCodPostal();
 	}
@@ -74,11 +74,11 @@ public class UsuarioDTO {
 		this.apellido = apellido;
 	}
 
-	public Rol getRol() {
+	public String getRol() {
 		return rol;
 	}
 
-	public void setRol(Rol rol) {
+	public void setRol(String rol) {
 		this.rol = rol;
 	}
 
@@ -114,11 +114,11 @@ public class UsuarioDTO {
 		this.temas = temas;
 	}
 
-	public Date getFechaNac() {
+	public String getFechaNac() {
 		return fechaNac;
 	}
 
-	public void setFechaNac(Date fechaNac) {
+	public void setFechaNac(String fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 

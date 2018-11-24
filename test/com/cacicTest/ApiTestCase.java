@@ -87,12 +87,15 @@ public class ApiTestCase {
 	public void testRESTUsuario()  {
 		try {
 			/*Tests Usuario Api*/
+			getUsuarios();
 			crearUsuario();
+			
 			modificarUsurio();
-//			getUsuario();
-//			getUsuarios();
+			getUsuario();
+			bajaUsuario();
+			
 //			esEspecifico();
-//			bajaUsuario();
+			
 		} catch (Exception e) {
 			fail("Exception thrown" + e.getMessage());
 		}
@@ -588,7 +591,7 @@ public class ApiTestCase {
 	 * Punto i: Crear usuarios.
 	 * 
 	 */
-	public void crearUsuario() throws ClientProtocolException, IOException {
+	public void getUsuario() throws ClientProtocolException, IOException {
 		Usuario user = new Usuario();
 		user.setNombre("Juan");
 		user.setApellido("Perez");
@@ -606,8 +609,8 @@ public class ApiTestCase {
 		
 		String url = BASE_URL + USUARIOS +"/" + idUser;
 		
-		HttpPost post = new HttpPost(url);
-		HttpResponse response = client.execute(post);
+		HttpGet get = new HttpGet(url);
+		HttpResponse response = client.execute(get);
 		
 		assertEquals(response.getStatusLine().getStatusCode(),200);
 		
@@ -627,7 +630,7 @@ public class ApiTestCase {
 		user.setLugarTrabajo("ISISTAN");
 		user.setNombreUsuario("pFlores");
 		user.setContrasenia("987654");
-		user.setTemas("programacion, cs de la computacion");
+		user.setTemas("programacion,computacion");
 		user.setFechaNac(new Date(System.currentTimeMillis()));
 		user.setDomicilio("calle 951");
 		user.setCodPostal(7000);
@@ -635,20 +638,71 @@ public class ApiTestCase {
 		
 		String url = BASE_URL + USUARIOS + "/" + idUser;
 		
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode jsonObject = mapper.createObjectNode();
+		jsonObject.put("nombre","nuevo");
+		jsonObject.put("apellido", "nuevo");
+		jsonObject.put("rol",Rol.revisor.name());
+		jsonObject.put("lugarTrabajo", "globant");
+		jsonObject.put("nombreUsuario","nuevo");
+		jsonObject.put("contrasenia", "nuevo");
+		jsonObject.put("temas","nuevo");
+		jsonObject.put("apellido", "nuevo");
+		String jsonString = jsonObject.toString();
+		
 		HttpPut put = new HttpPut(url);
+		put.setEntity(new StringEntity(jsonString, ContentType.APPLICATION_JSON));
 		HttpResponse response = client.execute(put);
 		
 		assertEquals(response.getStatusLine().getStatusCode(),200);
+	}
+	
+	public void crearUsuario() throws ClientProtocolException, IOException {
+				
+				String url = BASE_URL + USUARIOS + "/";
+				
+				ObjectMapper mapper = new ObjectMapper();
+				ObjectNode jsonObject = mapper.createObjectNode();
+				jsonObject.put("nombre","nuevo");
+				jsonObject.put("apellido", "nuevo");
+				jsonObject.put("rol",Rol.revisor.name());
+				jsonObject.put("lugarTrabajo", "globant");
+				jsonObject.put("nombreUsuario","nuevo");
+				jsonObject.put("contrasenia", "nuevo");
+				jsonObject.put("temas","nuevo");
+				jsonObject.put("apellido", "nuevo");
+				jsonObject.put("fechaNac", "");
+				jsonObject.put("codPostal", 123);
+				String jsonString = jsonObject.toString();
+				
+				HttpPost post = new HttpPost(url);
+				post.setEntity(new StringEntity(jsonString, ContentType.APPLICATION_JSON));
+				HttpResponse response = client.execute(post);
+				
+				assertEquals(response.getStatusLine().getStatusCode(),200);
+	}
+	public void getUsuarios() throws ClientProtocolException, IOException {
+		String url = BASE_URL + USUARIOS +"/";
+		HttpGet get = new HttpGet(url);
+		HttpResponse response = client.execute(get);
+		assertEquals(response.getStatusLine().getStatusCode(),200);
+		assertTrue(getRevisionsDTO(response).length>=0);
+	}
+	public void esEspecifico() {}
+	public void bajaUsuario() throws ClientProtocolException, IOException {
+		Usuario autor = new Usuario();
+		autor.setNombre("autor");
+		autor.setCodPostal(7000);
+		autor.setLugarTrabajo("tandil sa");
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode jsonObject = objectMapper.createObjectNode();
-		//Le modifico el nombre
-		jsonObject.put("nombre","Pepito");
-		jsonObject.put("apellido","Flores");
-		String json_string = EntityUtils.toString(response.getEntity());
-		UsuarioDTO result = objectMapper.readValue(json_string, UsuarioDTO.class);
-			
-		assertEquals(result.getIdUsuario(),idUser);
+		Integer idAutor = dbManager.getUsuarioDao().altaUsuario(autor);
+		autor.setIdUsuario(idAutor);
+		
+		/*BORRA EL USUARIO*/
+		String url = BASE_URL + USUARIOS +"/" + idAutor;
+		HttpDelete delete = new HttpDelete(url);
+		HttpResponse response = client.execute(delete);
+		assertEquals(response.getStatusLine().getStatusCode(),200);
 	}
 	
 	@After
