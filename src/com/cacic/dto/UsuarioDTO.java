@@ -1,12 +1,8 @@
 package com.cacic.dto;
 
 import java.sql.Date;
-import java.util.List;
 
-import com.cacic.entity.Revision;
 import com.cacic.entity.Rol;
-import com.cacic.entity.Tema;
-import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
 public class UsuarioDTO {
@@ -22,12 +18,9 @@ public class UsuarioDTO {
 	private Date fechaNac;
 	private String domicilio;
 	private int codPostal;
-	private List<Revision> revisiones;
-	private List<Trabajo> trabajos;
 	
 	public UsuarioDTO(Integer idUsuario, String nombre, String apellido, Rol rol, String lugarTrabajo,
-			String nombreUsuario, String contrasenia, String temas, Date fechaNac, String domicilio, int codPostal,
-			List<Revision> revisiones, List<Trabajo> trabajos) {
+			String nombreUsuario, String contrasenia, String temas, Date fechaNac, String domicilio, int codPostal) {
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -39,8 +32,6 @@ public class UsuarioDTO {
 		this.fechaNac = fechaNac;
 		this.domicilio = domicilio;
 		this.codPostal = codPostal;
-		this.revisiones = revisiones;
-		this.trabajos = trabajos;
 	}
 
 	public UsuarioDTO(Usuario usuario) {
@@ -55,9 +46,9 @@ public class UsuarioDTO {
 		this.fechaNac = usuario.getFechaNac();
 		this.domicilio = usuario.getDomicilio();
 		this.codPostal = usuario.getCodPostal();
-		this.revisiones = usuario.getRevisiones();
-		this.trabajos = usuario.getTrabajos();
 	}
+	
+	public UsuarioDTO() {}
 
 	public Integer getIdUsuario() {
 		return idUsuario;
@@ -147,20 +138,4 @@ public class UsuarioDTO {
 		this.codPostal = codPostal;
 	}
 
-	public List<Revision> getRevisiones() {
-		return revisiones;
-	}
-
-	public void setRevisiones(List<Revision> revisiones) {
-		this.revisiones = revisiones;
-	}
-
-	public List<Trabajo> getTrabajos() {
-		return trabajos;
-	}
-
-	public void setTrabajos(List<Trabajo> trabajos) {
-		this.trabajos = trabajos;
-	}
-	
 }

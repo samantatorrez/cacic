@@ -10,6 +10,7 @@
 		<class>com.cacic.entity.Revision</class>
 		<class>com.cacic.entity.Trabajo</class>
 		<class>com.cacic.entity.Usuario</class>
+		<class>com.cacic.entity.Tema</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver"

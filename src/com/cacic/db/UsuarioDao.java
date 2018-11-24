@@ -9,6 +9,7 @@ public interface UsuarioDao {
 	public Integer altaUsuario(Usuario usuario);
 	public Usuario getUsuario(Integer id);
 	public List<Usuario> getUsuarios();
+	public Usuario actualizaUsuario(Integer id, Usuario actual);
 	public void bajaUsuario(Integer id);
 	public void eliminarDatos();
 	

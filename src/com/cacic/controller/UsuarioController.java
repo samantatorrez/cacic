@@ -7,14 +7,17 @@ import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import com.cacic.dto.TrabajoDTO;
 import com.cacic.dto.UsuarioDTO;
 import com.cacic.entity.Tema;
 import com.cacic.entity.TipoPalabra;
+import com.cacic.entity.Trabajo;
 import com.cacic.entity.Usuario;
 
 @Path("/usuarios")
@@ -73,6 +76,22 @@ public class UsuarioController extends Controller {
 		Usuario usuario = dbManager.getUsuarioDao().getUsuario(idUsuario);
 		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
 		return Response.ok().entity(usuarioDTO).build();
+	}
+	
+	@PUT
+	@Path("/{idUsuario}")
+	@Produces("application/json")
+	public Response actualizarUsuario(@PathParam("idUsuario") Integer idUsuario, Usuario user) {
+		Usuario resultado = dbManager.getUsuarioDao().getUsuario(idUsuario);
+		if (resultado == null) {
+			return Response.status(400).entity("No se encontro el usuario pasado.").build();
+		}
+		try {
+			dbManager.getUsuarioDao().actualizaUsuario(idUsuario, user);
+			return Response.ok().build();
+		} catch (Exception e) {
+			return Response.status(400).entity("Error al actualizar el usuario en la base").build();
+		}
 	}
 
 	@DELETE
